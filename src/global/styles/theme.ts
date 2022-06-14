@@ -4,6 +4,8 @@ export default {
 	colors: {
 		primary: '#2CC2EB',
 
+		darker: '#211f1f',
+
 		background: '#FFFFFF',
 		background_light: '#F6F6Fc',
 		background_gray: '#8A8A8A',
@@ -28,7 +30,7 @@ export default {
 		base_top: ms(15),
 		base_padding: ms(15),
 		base_margin: ms(10),
-		base_border_radius: ms(5),
+		base_border_radius: ms(7),
 		ms,
 	},
 };
