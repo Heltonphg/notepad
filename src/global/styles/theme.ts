@@ -2,9 +2,12 @@ import { ms } from 'react-native-size-matters';
 
 export default {
 	colors: {
-		primary: '#5336D3',
-		text_dark: '#000000',
+		primary: '#2CC2EB',
 		background: '#F5F5F5',
+		background_gray: '#8A8A8A',
+		text_dark: '#434344',
+		text_light: '#FFFFFF',
+		text_gray: '#9B9B9B',
 	},
 
 	fonts: {

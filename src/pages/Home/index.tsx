@@ -1,21 +1,22 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Container } from './styles';
 import * as Location from 'expo-location';
+import { Text } from 'react-native';
 
 const Home: React.FC = () => {
-	useEffect(() => {
-		(async () => {
-			let { status } = await Location.requestForegroundPermissionsAsync();
-			if (status !== 'granted') {
-				return;
-			}
+	async function handleGetLocation() {
+		let { status } = await Location.requestForegroundPermissionsAsync();
+		if (status !== 'granted') {
+			return;
+		}
+		return await Location.getCurrentPositionAsync({});
+	}
 
-			let location = await Location.getCurrentPositionAsync({});
-			console.log(location);
-		})();
-	}, []);
-
-	return <Container></Container>;
+	return (
+		<Container>
+			<Text>Home</Text>
+		</Container>
+	);
 };
 
 export default Home;
