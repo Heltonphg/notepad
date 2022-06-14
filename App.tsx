@@ -34,7 +34,12 @@ export default function App() {
 				barStyle={'dark-content'}
 				backgroundColor={'white'}
 			/>
-			<SafeAreaView style={{ flex: 1 }}>
+			<SafeAreaView
+				style={{
+					flex: 1,
+					backgroundColor: theme.colors.background,
+					paddingTop: theme.metrics.base_top,
+				}}>
 				<NavigationContainer>
 					<AppRoutes />
 				</NavigationContainer>

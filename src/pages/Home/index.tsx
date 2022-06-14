@@ -1,7 +1,6 @@
 import React from 'react';
-import { Container } from './styles';
+import { Avatar, Container, Header, Profile, Title } from './styles';
 import * as Location from 'expo-location';
-import { Text } from 'react-native';
 
 const Home: React.FC = () => {
 	async function handleGetLocation() {
@@ -14,7 +13,12 @@ const Home: React.FC = () => {
 
 	return (
 		<Container>
-			<Text>Home</Text>
+			<Header>
+				<Title>Olá,{'\n'}Seja Bem-Vindo!</Title>
+				<Profile>
+					<Avatar source={require('../../assets/celebrite.png')} />
+				</Profile>
+			</Header>
 		</Container>
 	);
 };
