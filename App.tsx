@@ -2,7 +2,7 @@ import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { SafeAreaView, StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-
+import { NotesProvider, useNotes } from './src/hooks/notes';
 import {
 	useFonts,
 	BalooBhai2_400Regular,
@@ -23,7 +23,9 @@ export default function App() {
 		BalooBhai2_700Bold,
 	});
 
-	if (!fontsLoaded) {
+	const { isLoading } = useNotes();
+
+	if (!fontsLoaded || isLoading) {
 		return <ActivityIndicator />;
 	}
 
@@ -40,9 +42,11 @@ export default function App() {
 					backgroundColor: theme.colors.background,
 					paddingTop: theme.metrics.base_top,
 				}}>
-				<NavigationContainer>
-					<AppRoutes />
-				</NavigationContainer>
+				<NotesProvider>
+					<NavigationContainer>
+						<AppRoutes />
+					</NavigationContainer>
+				</NotesProvider>
 			</SafeAreaView>
 		</ThemeProvider>
 	);

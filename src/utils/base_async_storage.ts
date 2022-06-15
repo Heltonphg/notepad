@@ -7,6 +7,8 @@ interface BaseAsyncStorageProps {
 	value: any;
 }
 
+export const keyStorage = '@notepad:notes';
+
 export const persistStorage = async <T>(data: BaseAsyncStorageProps) => {
 	try {
 		return AsyncStorage.setItem(

@@ -19,6 +19,8 @@ import * as Location from 'expo-location';
 import { MaterialIcons } from '@expo/vector-icons';
 import theme from '../../global/styles/theme';
 import { NotesProps } from '../../global/interfaces';
+import { useNotes } from '../../hooks/notes';
+import { useIsFocused } from '@react-navigation/native';
 
 const mockNotes: NotesProps[] = [
 	{
@@ -67,13 +69,7 @@ const mockNotes: NotesProps[] = [
 const Home: React.FC = () => {
 	const [search, setSearch] = React.useState('');
 
-	async function handleGetLocation() {
-		let { status } = await Location.requestForegroundPermissionsAsync();
-		if (status !== 'granted') {
-			return;
-		}
-		return await Location.getCurrentPositionAsync({});
-	}
+	const { notes } = useNotes();
 
 	function _renderNotes(item: NotesProps, index: number) {
 		return (
@@ -117,7 +113,7 @@ const Home: React.FC = () => {
 			<NotePadWrapper>
 				<NotesList
 					numColumns={2}
-					data={mockNotes}
+					data={notes}
 					keyExtractor={(item, index) => index.toString()}
 					renderItem={({ item, index }) => _renderNotes(item, index)}
 					ListHeaderComponent={() => <TitleHeader>Notes</TitleHeader>}

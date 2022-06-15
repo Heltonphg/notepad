@@ -12,12 +12,17 @@ import theme from '../../global/styles/theme';
 import moment from 'moment';
 import 'moment/locale/pt-br';
 
-import { TouchableOpacity } from 'react-native';
+import { ActivityIndicator, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useNotes } from '../../hooks/notes';
+import { NotesProps } from '../../global/interfaces';
+import * as Location from 'expo-location';
+import { getRandomColor } from '../../utils/functions';
 
 const NotepadAdd: React.FC = () => {
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
+	const [loading, setLoading] = useState<boolean>(false);
 
 	const [isValid, setIsValid] = useState(false);
 
@@ -31,6 +36,32 @@ const NotepadAdd: React.FC = () => {
 		}
 	}, [title, description]);
 
+	const { addNote } = useNotes();
+
+	async function handleGetLocation() {
+		let { status } = await Location.requestForegroundPermissionsAsync();
+		if (status !== 'granted') {
+			return;
+		}
+		return await Location.getCurrentPositionAsync({});
+	}
+
+	async function handleSaveNote() {
+		setLoading(true);
+		const location: any = await handleGetLocation();
+		const note: NotesProps = {
+			title,
+			description,
+			color: getRandomColor(),
+			date: moment().format('YYYY-MM-DD'),
+			location: location.coords.latitude + ',' + location.coords.longitude,
+		};
+
+		await addNote(note);
+		setLoading(false);
+		navigation.navigate('Home');
+	}
+
 	return (
 		<Container>
 			<Header>
@@ -40,14 +71,21 @@ const NotepadAdd: React.FC = () => {
 
 				<Date>{moment().format('ll')}</Date>
 
-				<TouchableOpacity disabled={!isValid}>
-					<Icon
-						name={'check'}
-						size={theme.metrics.ms(25)}
-						color={
-							!isValid ? theme.colors.gray_disable : theme.colors.text_dark
-						}
-					/>
+				<TouchableOpacity disabled={!isValid} onPress={() => handleSaveNote()}>
+					{loading ? (
+						<ActivityIndicator
+							color={theme.colors.primary}
+							size={theme.metrics.ms(24)}
+						/>
+					) : (
+						<Icon
+							name={'check'}
+							size={theme.metrics.ms(24)}
+							color={
+								!isValid ? theme.colors.gray_disable : theme.colors.text_dark
+							}
+						/>
+					)}
 				</TouchableOpacity>
 			</Header>
 
