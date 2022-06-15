@@ -11,13 +11,17 @@ import {
 import theme from '../../global/styles/theme';
 import moment from 'moment';
 import 'moment/locale/pt-br';
+
 import { TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const NotepadAdd: React.FC = () => {
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 
 	const [isValid, setIsValid] = useState(false);
+
+	const navigation: any = useNavigation();
 
 	useEffect(() => {
 		if (title.length > 0 && description.length > 0) {
@@ -30,7 +34,7 @@ const NotepadAdd: React.FC = () => {
 	return (
 		<Container>
 			<Header>
-				<TouchableOpacity>
+				<TouchableOpacity onPress={() => navigation.goBack()}>
 					<Icon name={'arrow-back'} size={theme.metrics.ms(27)} />
 				</TouchableOpacity>
 
