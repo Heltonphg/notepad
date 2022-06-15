@@ -53,7 +53,7 @@ const NotepadAdd: React.FC = () => {
 			title,
 			description,
 			color: getRandomColor(),
-			date: moment().format('YYYY-MM-DD'),
+			date: moment().format('YYYY-MM-DD HH:mm:ss'),
 			location: location.coords.latitude + ',' + location.coords.longitude,
 		};
 

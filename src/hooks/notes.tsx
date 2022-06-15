@@ -27,7 +27,6 @@ export const NotesContext = createContext({} as INotesContextData);
 function NotesProvider({ children }: NotesProviderProps) {
 	const [notes, setNotes] = useState<NotesProps[]>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
-	const [isLoadingAdd, setIsLoadingAdd] = useState<boolean>(false);
 
 	async function getNotes() {
 		setIsLoading(true);

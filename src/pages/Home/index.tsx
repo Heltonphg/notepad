@@ -71,6 +71,10 @@ const Home: React.FC = () => {
 
 	const { notes } = useNotes();
 
+	function sortDate(element1: NotesProps, element2: NotesProps): any {
+		return element1.date < element2.date;
+	}
+
 	function _renderNotes(item: NotesProps, index: number) {
 		return (
 			<CardNote
@@ -113,7 +117,7 @@ const Home: React.FC = () => {
 			<NotePadWrapper>
 				<NotesList
 					numColumns={2}
-					data={notes}
+					data={notes.sort(sortDate)}
 					keyExtractor={(item, index) => index.toString()}
 					renderItem={({ item, index }) => _renderNotes(item, index)}
 					ListHeaderComponent={() => <TitleHeader>Notes</TitleHeader>}
