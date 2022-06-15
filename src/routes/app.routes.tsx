@@ -5,7 +5,7 @@ import { Platform } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import Home from '../pages/Home';
 import { ms } from 'react-native-size-matters';
-import NoteAdd from '../pages/NoteAdd';
+import NotepadAdd from '../pages/NotepadAdd';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -18,6 +18,7 @@ const AppRoutes: React.FC = () => {
 				tabBarActiveTintColor: theme.colors.primary,
 				tabBarInactiveTintColor: theme.colors.background_gray,
 				tabBarLabelPosition: 'beside-icon',
+				tabBarHideOnKeyboard: true,
 				tabBarShowLabel: false,
 				tabBarStyle: {
 					height: ms(50),
@@ -40,8 +41,8 @@ const AppRoutes: React.FC = () => {
 			/>
 
 			<Screen
-				name="note_add"
-				component={NoteAdd}
+				name="NotepadAdd"
+				component={NotepadAdd}
 				options={{
 					tabBarLabelPosition: 'below-icon',
 					tabBarIcon: ({ size, color }) => (

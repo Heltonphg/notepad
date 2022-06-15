@@ -3,4 +3,5 @@ export interface NotesProps {
 	description: string;
 	date: string;
 	color: string;
+	location?: string;
 }
