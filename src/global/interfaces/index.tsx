@@ -1,4 +1,5 @@
 export interface NotesProps {
+	id: string;
 	title: string;
 	description: string;
 	date: any;

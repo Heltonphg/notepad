@@ -66,6 +66,12 @@ export const NotePadWrapper = styled.View`
 	padding-top: ${({ theme }) => theme.metrics.base_top}px;
 `;
 
+export const WrapperButton = styled.TouchableOpacity.attrs({
+	activeOpacity: 0.8,
+})`
+	flex: 1;
+`;
+
 export const CardNote = styled(Animatable.View)`
 	width: 47%;
 	border-radius: ${({ theme }) => theme.metrics.base_border_radius}px;
@@ -103,6 +109,7 @@ export const TitleHeader = styled.Text`
 	font-size: ${({ theme }) => theme.metrics.normal}px;
 	margin-bottom: ${({ theme }) => theme.metrics.ms(10)}px;
 `;
+
 export const TitleEmpty = styled.Text`
 	color: ${({ theme }) => theme.colors.text_dark};
 	font-family: ${({ theme }) => theme.fonts.medium};

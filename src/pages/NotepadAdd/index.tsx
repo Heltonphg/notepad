@@ -11,9 +11,10 @@ import {
 import theme from '../../global/styles/theme';
 import moment from 'moment';
 import 'moment/locale/pt-br';
+import uuid from 'react-native-uuid';
 
 import { ActivityIndicator, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { useNotes } from '../../hooks/notes';
 import { NotesProps } from '../../global/interfaces';
 import * as Location from 'expo-location';
@@ -24,9 +25,12 @@ const NotepadAdd: React.FC = () => {
 	const [description, setDescription] = useState('');
 	const [loading, setLoading] = useState<boolean>(false);
 
+	const { detailNote, addNote, editNote, setNoteDetail } = useNotes();
+
 	const [isValid, setIsValid] = useState(false);
 
 	const navigation: any = useNavigation();
+	const isFocused = useIsFocused();
 
 	useEffect(() => {
 		if (title.length > 0 && description.length > 0) {
@@ -36,7 +40,16 @@ const NotepadAdd: React.FC = () => {
 		}
 	}, [title, description]);
 
-	const { addNote } = useNotes();
+	useEffect(() => {
+		if (detailNote && isFocused) {
+			setTitle(detailNote.title);
+			setDescription(detailNote.description);
+		} else {
+			setTitle('');
+			setDescription('');
+			setNoteDetail(null);
+		}
+	}, [isFocused]);
 
 	async function handleGetLocation() {
 		let { status } = await Location.requestForegroundPermissionsAsync();
@@ -50,18 +63,33 @@ const NotepadAdd: React.FC = () => {
 		setLoading(true);
 		const location: any = await handleGetLocation();
 		const note: NotesProps = {
+			id: detailNote ? detailNote.id : String(uuid.v4()),
 			title,
 			description,
-			color: getRandomColor(),
-			date: moment().format('YYYY-MM-DD HH:mm:ss'),
-			location: location.coords.latitude + ',' + location.coords.longitude,
+			color: detailNote ? detailNote.color : getRandomColor(),
+			date: detailNote
+				? detailNote.date
+				: moment().format('YYYY-MM-DD HH:mm:ss'),
+			location: detailNote
+				? detailNote.location
+				: location.coords.latitude + ',' + location.coords.longitude,
 		};
 
-		await addNote(note);
+		if (detailNote) {
+			await editNote(note);
+		} else {
+			await addNote(note);
+		}
+
 		setLoading(false);
 		setDescription('');
 		setTitle('');
-		navigation.navigate('Home');
+		setNoteDetail(null);
+		if (detailNote) {
+			navigation.goBack();
+		} else {
+			navigation.navigate('Home');
+		}
 	}
 
 	return (

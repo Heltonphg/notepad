@@ -14,6 +14,7 @@ import {
 	TitleEmpty,
 	TitleHeader,
 	TitleNote,
+	WrapperButton,
 } from './styles';
 
 import { createFilter } from 'react-native-search-filter';
@@ -22,12 +23,15 @@ import theme from '../../global/styles/theme';
 import { NotesProps } from '../../global/interfaces';
 import { useNotes } from '../../hooks/notes';
 import { TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const Home: React.FC = () => {
 	const [search, setSearch] = useState('');
 	const [listSearch, setListaSearch] = useState<NotesProps[]>([]);
 
-	const { notes } = useNotes();
+	const navigation: any = useNavigation();
+
+	const { notes, setNoteDetail } = useNotes();
 
 	function sortDate(element1: NotesProps, element2: NotesProps): any {
 		return element1.date < element2.date;
@@ -38,7 +42,7 @@ const Home: React.FC = () => {
 			createFilter(search, ['title', 'description']),
 		);
 		setListaSearch(filteredList);
-	}, [search]);
+	}, [search, notes]);
 
 	function _renderNotes(item: NotesProps, index: number) {
 		return (
@@ -53,8 +57,16 @@ const Home: React.FC = () => {
 						backgroundColor: item.color,
 					},
 				]}>
-				<TitleNote>{item.title}</TitleNote>
-				<DescriptionNote numberOfLines={6}>{item.description}</DescriptionNote>
+				<WrapperButton
+					onPress={() => {
+						setNoteDetail(item);
+						navigation.navigate('NotepadAdd');
+					}}>
+					<TitleNote>{item.title}</TitleNote>
+					<DescriptionNote numberOfLines={6}>
+						{item.description}
+					</DescriptionNote>
+				</WrapperButton>
 			</CardNote>
 		);
 	}

@@ -19,6 +19,9 @@ interface INotesContextData {
 	notes: NotesProps[];
 	getNotes(): Promise<void>;
 	addNote(note: NotesProps): Promise<void>;
+	editNote(note: NotesProps): Promise<void>;
+	setNoteDetail(note: NotesProps | null): void;
+	detailNote: NotesProps | null;
 	isLoading: boolean;
 }
 
@@ -26,6 +29,8 @@ export const NotesContext = createContext({} as INotesContextData);
 
 function NotesProvider({ children }: NotesProviderProps) {
 	const [notes, setNotes] = useState<NotesProps[]>([]);
+	const [detailNote, setDetailNote] = useState<NotesProps | null>(null);
+
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 
 	async function getNotes() {
@@ -61,6 +66,31 @@ function NotesProvider({ children }: NotesProviderProps) {
 		}
 	}
 
+	async function editNote(note: NotesProps) {
+		const notes_storage: NotesProps[] | null = await loadStorage(keyStorage);
+		if (notes_storage) {
+			let allNotes: NotesProps[] = notes_storage;
+
+			const existNote = allNotes.find((element) => element.id === note.id);
+
+			if (!!existNote) {
+				allNotes = notes_storage.filter((element) => element.id !== note.id);
+				allNotes = [...allNotes, note];
+			}
+
+			setNotes(allNotes);
+
+			await persistStorage({
+				key: keyStorage,
+				value: allNotes,
+			});
+		}
+	}
+
+	function setNoteDetail(note: NotesProps | null) {
+		setDetailNote(note);
+	}
+
 	useEffect(() => {
 		getNotes();
 	}, []);
@@ -71,7 +101,10 @@ function NotesProvider({ children }: NotesProviderProps) {
 				notes,
 				getNotes,
 				addNote,
+				editNote,
 				isLoading,
+				detailNote,
+				setNoteDetail,
 			}}>
 			{children}
 		</NotesContext.Provider>

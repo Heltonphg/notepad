@@ -1,7 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useTheme } from 'styled-components';
-import { Platform } from 'react-native';
+
 import { MaterialIcons } from '@expo/vector-icons';
 import Home from '../pages/Home';
 import { ms } from 'react-native-size-matters';
