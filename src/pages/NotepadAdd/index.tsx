@@ -10,7 +10,6 @@ import {
 } from './styles';
 import theme from '../../global/styles/theme';
 import moment from 'moment';
-import 'moment/locale/pt-br';
 import uuid from 'react-native-uuid';
 
 import { ActivityIndicator, TouchableOpacity } from 'react-native';
@@ -67,9 +66,7 @@ const NotepadAdd: React.FC = () => {
 			title,
 			description,
 			color: detailNote ? detailNote.color : getRandomColor(),
-			date: detailNote
-				? detailNote.date
-				: moment().format('YYYY-MM-DD HH:mm:ss'),
+			date: moment().format('YYYY-MM-DD HH:mm:ss'),
 			location: detailNote
 				? detailNote.location
 				: location.coords.latitude + ',' + location.coords.longitude,

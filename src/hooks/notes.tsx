@@ -20,6 +20,7 @@ interface INotesContextData {
 	getNotes(): Promise<void>;
 	addNote(note: NotesProps): Promise<void>;
 	editNote(note: NotesProps): Promise<void>;
+	deleteNote(note: NotesProps): Promise<void>;
 	setNoteDetail(note: NotesProps | null): void;
 	detailNote: NotesProps | null;
 	isLoading: boolean;
@@ -87,6 +88,22 @@ function NotesProvider({ children }: NotesProviderProps) {
 		}
 	}
 
+	async function deleteNote(note: NotesProps) {
+		const notes_storage: NotesProps[] | null = await loadStorage(keyStorage);
+		if (notes_storage) {
+			const allNotes = notes_storage.filter(
+				(element) => element.id !== note.id,
+			);
+
+			setNotes(allNotes);
+
+			await persistStorage({
+				key: keyStorage,
+				value: allNotes,
+			});
+		}
+	}
+
 	function setNoteDetail(note: NotesProps | null) {
 		setDetailNote(note);
 	}
@@ -105,6 +122,7 @@ function NotesProvider({ children }: NotesProviderProps) {
 				isLoading,
 				detailNote,
 				setNoteDetail,
+				deleteNote,
 			}}>
 			{children}
 		</NotesContext.Provider>

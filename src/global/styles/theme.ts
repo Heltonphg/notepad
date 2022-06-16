@@ -14,6 +14,8 @@ export default {
 		text_light: '#FFFFFF',
 		text_gray: '#9B9B9B',
 		gray_disable: 'rgb(218,217,217)',
+
+		danger: '#a40f0f',
 	},
 
 	fonts: {

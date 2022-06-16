@@ -3,6 +3,8 @@ import { ThemeProvider } from 'styled-components';
 import { SafeAreaView, StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { NotesProvider, useNotes } from './src/hooks/notes';
+import 'moment/locale/pt-br';
+
 import {
 	useFonts,
 	BalooBhai2_400Regular,

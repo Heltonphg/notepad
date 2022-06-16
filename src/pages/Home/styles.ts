@@ -71,6 +71,9 @@ export const WrapperButton = styled.TouchableOpacity.attrs({
 })`
 	flex: 1;
 `;
+export const ButtonDelete = styled.TouchableOpacity.attrs({
+	activeOpacity: 0.8,
+})``;
 
 export const CardNote = styled(Animatable.View)`
 	width: 47%;
@@ -80,7 +83,7 @@ export const CardNote = styled(Animatable.View)`
 
 	padding: ${({ theme }) => theme.metrics.ms(8)}px
 		${({ theme }) => theme.metrics.ms(6)}px
-		${({ theme }) => theme.metrics.ms(6)}px
+		${({ theme }) => theme.metrics.ms(2)}px
 		${({ theme }) => theme.metrics.ms(8)}px;
 `;
 
@@ -101,6 +104,17 @@ export const DescriptionNote = styled.Text`
 	color: ${({ theme }) => theme.colors.text_dark};
 	font-family: ${({ theme }) => theme.fonts.regular};
 	font-size: ${({ theme }) => theme.metrics.small}px;
+`;
+
+export const Date = styled.Text`
+	color: ${({ theme }) => theme.colors.text_dark};
+	font-family: ${({ theme }) => theme.fonts.regular};
+	font-size: ${({ theme }) => theme.metrics.small}px;
+`;
+export const WrapperFooter = styled.View`
+	width: 100%;
+	flex-direction: row;
+	justify-content: space-between;
 `;
 
 export const TitleHeader = styled.Text`

@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import {
 	Avatar,
+	ButtonDelete,
 	CardNote,
 	Container,
+	Date,
 	DescriptionNote,
 	Header,
 	InputSearch,
@@ -15,6 +17,7 @@ import {
 	TitleHeader,
 	TitleNote,
 	WrapperButton,
+	WrapperFooter,
 } from './styles';
 
 import { createFilter } from 'react-native-search-filter';
@@ -22,8 +25,9 @@ import { MaterialIcons } from '@expo/vector-icons';
 import theme from '../../global/styles/theme';
 import { NotesProps } from '../../global/interfaces';
 import { useNotes } from '../../hooks/notes';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import moment from 'moment';
 
 const Home: React.FC = () => {
 	const [search, setSearch] = useState('');
@@ -31,7 +35,7 @@ const Home: React.FC = () => {
 
 	const navigation: any = useNavigation();
 
-	const { notes, setNoteDetail } = useNotes();
+	const { notes, setNoteDetail, deleteNote } = useNotes();
 
 	function sortDate(element1: NotesProps, element2: NotesProps): any {
 		return element1.date < element2.date;
@@ -43,6 +47,25 @@ const Home: React.FC = () => {
 		);
 		setListaSearch(filteredList);
 	}, [search, notes]);
+
+	const showConfirmDialog = (item: NotesProps) => {
+		return Alert.alert(
+			'Você tem certeza?',
+			'Tem certeza que quer remover essa anotação?',
+			[
+				{
+					text: 'Sim',
+					onPress: () => {
+						deleteNote(item);
+					},
+				},
+
+				{
+					text: 'Não',
+				},
+			],
+		);
+	};
 
 	function _renderNotes(item: NotesProps, index: number) {
 		return (
@@ -67,6 +90,16 @@ const Home: React.FC = () => {
 						{item.description}
 					</DescriptionNote>
 				</WrapperButton>
+				<WrapperFooter>
+					<Date>{moment(item.date).format('ll')}</Date>
+					<ButtonDelete onPress={() => showConfirmDialog(item)}>
+						<MaterialIcons
+							name={'delete'}
+							size={theme.metrics.ms(18)}
+							color={theme.colors.darker}
+						/>
+					</ButtonDelete>
+				</WrapperFooter>
 			</CardNote>
 		);
 	}
