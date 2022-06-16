@@ -48,7 +48,7 @@ const AppRoutes: React.FC = () => {
 					tabBarIcon: ({ size, color }) => (
 						<MaterialIcons
 							name="add-circle"
-							size={ms(33)}
+							size={ms(36)}
 							color={theme.colors.primary}
 						/>
 					),
@@ -60,7 +60,7 @@ const AppRoutes: React.FC = () => {
 				options={{
 					tabBarLabelPosition: 'below-icon',
 					tabBarIcon: ({ size, color }) => (
-						<MaterialIcons name="favorite-outline" size={size} color={color} />
+						<MaterialIcons name="bookmark-border" size={size} color={color} />
 					),
 				}}
 			/>
