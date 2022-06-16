@@ -54,7 +54,7 @@ export const SearchBar = styled.View`
 export const InputSearch = styled.TextInput.attrs({
 	placeholderTextColor: theme.colors.text_gray,
 })`
-	width: 93%;
+	width: 86%;
 	height: 100%;
 	margin-left: ${({ theme }) => theme.metrics.ms(8)}px;
 	font-size: ${({ theme }) => theme.metrics.small}px;
@@ -100,6 +100,12 @@ export const DescriptionNote = styled.Text`
 export const TitleHeader = styled.Text`
 	color: ${({ theme }) => theme.colors.text_dark};
 	font-family: ${({ theme }) => theme.fonts.bold};
+	font-size: ${({ theme }) => theme.metrics.normal}px;
+	margin-bottom: ${({ theme }) => theme.metrics.ms(10)}px;
+`;
+export const TitleEmpty = styled.Text`
+	color: ${({ theme }) => theme.colors.text_dark};
+	font-family: ${({ theme }) => theme.fonts.medium};
 	font-size: ${({ theme }) => theme.metrics.normal}px;
 	margin-bottom: ${({ theme }) => theme.metrics.ms(10)}px;
 `;

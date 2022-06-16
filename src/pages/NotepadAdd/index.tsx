@@ -59,6 +59,8 @@ const NotepadAdd: React.FC = () => {
 
 		await addNote(note);
 		setLoading(false);
+		setDescription('');
+		setTitle('');
 		navigation.navigate('Home');
 	}
 

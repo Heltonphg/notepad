@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
 	Avatar,
 	CardNote,
@@ -11,69 +11,34 @@ import {
 	Profile,
 	SearchBar,
 	Title,
+	TitleEmpty,
 	TitleHeader,
 	TitleNote,
 } from './styles';
 
-import * as Location from 'expo-location';
+import { createFilter } from 'react-native-search-filter';
 import { MaterialIcons } from '@expo/vector-icons';
 import theme from '../../global/styles/theme';
 import { NotesProps } from '../../global/interfaces';
 import { useNotes } from '../../hooks/notes';
-import { useIsFocused } from '@react-navigation/native';
-
-const mockNotes: NotesProps[] = [
-	{
-		title: 'Note 1',
-		description: 'Lorem Ipsum is simply dummy tex',
-		date: '2020-01-01',
-		color: '#e8f5fd',
-	},
-	{
-		title: 'Note 2',
-		description:
-			'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
-		date: '2020-01-02',
-		color: '#fef4e1',
-	},
-	{
-		title: 'Note 3',
-		description:
-			'Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum is simply dummy text of the printing and typesetting industry',
-		date: '2020-01-02',
-		color: '#fee9f3',
-	},
-	{
-		title: 'Note 4',
-		description:
-			'Lorem Ipsum is simply dummy text of the printinLorem Ipsum is simply dummy text of the printinLorem Ipsum is simply dummy text of the printinLorem Ipsum is simply dummy text of the printinLorem Ipsum is simply dummy text of the printinpo',
-		date: '2020-01-02',
-		color: '#7dfd99',
-	},
-	{
-		title: 'Note 7',
-		description:
-			'Lorem Ipsum is simply dummy text of the printinLorem Ipsum is simply dummy text of the printinLorem Ipsum is simply dummy text of the printinLorem Ipsum is simply dummy text of the printinLorem Ipsum is simply dummy text of the printinpo',
-		date: '2020-01-02',
-		color: 'rgba(139,240,245,0.37)',
-	},
-	{
-		title: 'Note 8',
-		description:
-			'Lorem Ipsum is simply dummy text of the printinLorem Ipsum is simply dummy text of the printinLorem Ipsum is simply dummy text of the printinLorem Ipsum is simply dummy text of the printinLorem Ipsum is simply dummy text of the printinpo',
-		date: '2020-01-02',
-		color: '#d7bb95',
-	},
-];
+import { TouchableOpacity } from 'react-native';
 
 const Home: React.FC = () => {
-	const [search, setSearch] = React.useState('');
+	const [search, setSearch] = useState('');
+	const [listSearch, setListaSearch] = useState<NotesProps[]>([]);
 
 	const { notes } = useNotes();
 
 	function sortDate(element1: NotesProps, element2: NotesProps): any {
 		return element1.date < element2.date;
 	}
+
+	useEffect(() => {
+		const filteredList = notes.filter(
+			createFilter(search, ['title', 'description']),
+		);
+		setListaSearch(filteredList);
+	}, [search]);
 
 	function _renderNotes(item: NotesProps, index: number) {
 		return (
@@ -112,15 +77,32 @@ const Home: React.FC = () => {
 					autoCapitalize="none"
 					autoCorrect={false}
 				/>
+				{!!search && (
+					<TouchableOpacity onPress={() => setSearch('')}>
+						<MaterialIcons name="close" size={24} color={theme.colors.darker} />
+					</TouchableOpacity>
+				)}
 			</SearchBar>
 
 			<NotePadWrapper>
 				<NotesList
 					numColumns={2}
-					data={notes.sort(sortDate)}
+					data={listSearch.sort(sortDate)}
 					keyExtractor={(item, index) => index.toString()}
 					renderItem={({ item, index }) => _renderNotes(item, index)}
-					ListHeaderComponent={() => <TitleHeader>Notes</TitleHeader>}
+					ListHeaderComponent={() => {
+						if (notes.length > 0) {
+							return <TitleHeader>Minhas Anotações</TitleHeader>;
+						}
+						return <></>;
+					}}
+					ListEmptyComponent={() => (
+						<TitleEmpty>
+							{!!search
+								? 'nenhuma anotação encontrada...'
+								: 'nenhuma anotação adicionada...'}
+						</TitleEmpty>
+					)}
 				/>
 			</NotePadWrapper>
 		</Container>

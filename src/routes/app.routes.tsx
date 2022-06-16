@@ -22,7 +22,7 @@ const AppRoutes: React.FC = () => {
 				tabBarShowLabel: false,
 				tabBarStyle: {
 					height: ms(50),
-					paddingVertical: Platform.OS === 'ios' ? 20 : 0,
+
 					borderTopLeftRadius: ms(20),
 					borderTopRightRadius: ms(20),
 					paddingBottom: ms(5),
