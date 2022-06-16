@@ -115,6 +115,7 @@ export const WrapperFooter = styled.View`
 	width: 100%;
 	flex-direction: row;
 	justify-content: space-between;
+	padding-top: ${({ theme }) => theme.metrics.ms(10)}px;
 `;
 
 export const TitleHeader = styled.Text`
