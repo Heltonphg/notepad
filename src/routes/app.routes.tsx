@@ -6,6 +6,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import Home from '../pages/Home';
 import { ms } from 'react-native-size-matters';
 import NotepadAdd from '../pages/NotepadAdd';
+import Favorite from '../pages/Favorite';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -56,7 +57,7 @@ const AppRoutes: React.FC = () => {
 			/>
 			<Screen
 				name="favorite"
-				component={Home}
+				component={Favorite}
 				options={{
 					tabBarLabelPosition: 'below-icon',
 					tabBarIcon: ({ size, color }) => (
