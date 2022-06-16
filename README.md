@@ -5,8 +5,8 @@ O objetivo desse exercício é construir um aplicativo em React Native para salv
 
 
 ## 📱 Telas
-| ![Home](./.github/home.png "Home") | ![AddNotes](./.github/noteAdd.png "Home") |
-|:----------------------------------:|:-----------------------------------------:|
+| ![Home](./.github/Home.png "Home") | ![AddNotes](./.github/noteAdd.png "NoteAdd") |
+|:----------------------------------:|:--------------------------------------------:|
 
 
 ## 👾 Tecnologias usadas
